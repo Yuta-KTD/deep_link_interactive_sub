@@ -5,8 +5,10 @@ version: 0.1.0
 
 environment:
   sdk: '>=3.3.4 <4.0.0'
+  flutter: '3.29.0'
 
 dependencies:
+  app_links: ^6.4.0
   flutter:
     sdk: flutter
   go_router: ^14.6.2

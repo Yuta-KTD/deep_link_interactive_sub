@@ -52,9 +52,11 @@
         <dict>
         <key>CFBundleTypeRole</key>
         <string>Editor</string>
+		<key>CFBundleURLName</key>
+		<string>com.example.deepLinkSub</string>
         <key>CFBundleURLSchemes</key>
         <array>
-        <string>deepLinkSub</string>
+        	<string>deepLinkSubScheme</string>
         </array>
         </dict>
     </array>
