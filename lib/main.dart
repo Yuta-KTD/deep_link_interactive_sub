@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -88,7 +89,9 @@ class _DeepLinkHandlerState extends State<DeepLinkHandler> {
 
   Future<void> _launchDeepLink() async {
     final id = Random().nextInt(900) + 100;
-    final deepLinkUrl = 'deepLinkMainScheme://open?id=$id';
+    final deepLinkUrl = Platform.isIOS
+        ? 'deepLinkMainScheme://open?id=$id'
+        : 'deeplinkmainscheme://open?id=$id';
 
     await Future.delayed(const Duration(milliseconds: 1500));
 
@@ -107,7 +110,7 @@ class _DeepLinkHandlerState extends State<DeepLinkHandler> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('ディープリンクデモ'),
+        title: const Text('アプリB'),
       ),
       body: Center(
         child: Column(
