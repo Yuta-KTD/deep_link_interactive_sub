@@ -1,19 +1,33 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:app_links/app_links.dart';
+import 'package:go_router/go_router.dart';
 import 'dart:async';
 
 void main() {
   runApp(const MainApp());
 }
 
+final _router = GoRouter(
+  initialLocation: '/',
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const DeepLinkHandler(),
+    ),
+  ],
+);
+
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: DeepLinkHandler(),
+    return MaterialApp.router(
+      routerConfig: _router,
+      title: 'ディープリンクサブアプリ',
     );
   }
 }
@@ -42,7 +56,7 @@ class _DeepLinkHandlerState extends State<DeepLinkHandler> {
     super.dispose();
   }
 
-  Future<void> _initDeepLinkListener() async {
+  void _initDeepLinkListener() {
     // ディープリンクを監視
     _linkSubscription = _appLinks.uriLinkStream.listen(
       (Uri uri) {
@@ -73,7 +87,10 @@ class _DeepLinkHandlerState extends State<DeepLinkHandler> {
   }
 
   Future<void> _launchDeepLink() async {
-    const deepLinkUrl = 'deepLinkMainScheme://open?id=123';
+    final id = Random().nextInt(900) + 100;
+    final deepLinkUrl = 'deepLinkMainScheme://open?id=$id';
+
+    await Future.delayed(const Duration(milliseconds: 1500));
 
     try {
       final uri = Uri.parse(deepLinkUrl);
@@ -89,6 +106,7 @@ class _DeepLinkHandlerState extends State<DeepLinkHandler> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('ディープリンクデモ'),
       ),
       body: Center(
